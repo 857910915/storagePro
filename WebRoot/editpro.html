@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title></title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<link
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="css/main.css" rel="stylesheet">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+<script src="js/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/distpicker.data.js"></script>
+<script src="js/distpicker.js"></script>
+<script src="js/main.js"></script>
+<style type="text/css">
+.bo {
+	height: 200px;
+}
+</style>
+</head>
+<body onload="asspro()">
+	<div class="panel admin-panel">
+		<div class="panel-head" id="add">
+			<strong><span class="icon-pencil-square-o"></span>增加商品</strong>
+		</div>
+		<div class="body-content">
+			<form method="post" class="form-x"
+				action="ProductServlet.do?dowhat=editpro"
+				enctype="multipart/form-data">
+				<div class="form-group">
+					<div class="label">
+						<label>商品编号：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" id="proid1" name="proid"
+							readonly="readonly">
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>商品图片：</label>
+					</div>
+					<div class="field">
+						<input type="file" id="proimg1" name="proimg" class="input tips"
+							style="width:25%; float:left;" value="" data-toggle="hover"
+							data-place="right" data-image="" />
+						<div class="tipss">图片尺寸：500*500</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>商品名称：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" id="proname1" name="proname"
+							data-validate="required:请输入商品名称" />
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>生产商：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" id="procompany1"
+							name="procompany" data-validate="required:请输入生产商" />
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>商品分类：</label>
+					</div>
+					<div class="field">
+						<select name="protype" id="protype1" class="input w50">
+							<option>请选择分类</option>
+							<option value="学习用品">学习用品</option>
+							<option value="生活用品">生活用品</option>
+							<option value="日常用品">日常用品</option>
+							<option value="工作用品">工作用品</option>
+							<option value="其他用品">其他用品</option>
+						</select>
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>商品价格：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" id="proprice1"
+							name="proprice" data-validate="required:请输入单价" />
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>商品状态：</label>
+					</div>
+					<div class="field">
+						<input type="radio" value="1" name="prostyate"> <label>有库存</label>
+						<input type="radio" value="2" name="prostyate"><label>无库存</label>
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>生产日期：</label>
+					</div>
+					<div class="field">
+						<input type="date" class="input w50" id="protime1" name="protime"
+							data-validate="required:请输入生产日期" />
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>排序：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="prosort" id="prosort1"
+							data-validate="number:排序必须为数字" />
+						<div class="tips"></div>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<div class="label">
+						<label></label>
+					</div>
+					<div class="field">
+						<button class="button bg-main icon-check-square-o" type="submit">
+							提交</button>
+						<button class="button bg-main icon-check-square-o" type="reset">
+							重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="bo"></div>
+	</div>
+
+</body>
+<script src="minejs/product.js"></script>
+</html>

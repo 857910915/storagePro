@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title>人员信息</title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+<style type="text/css">
+td {
+	height: 80px;
+}
+#add{
+	width: 50%;
+	border-right: 1px black solid;
+	float: left;
+}
+#edit{
+	width: 50%;
+	float: left;
+}
+</style>
+</head>
+<body onload="getPerInfo()">
+	<div class="panel admin-panel">
+		<div class="panel-head">
+			<strong class="icon-reorder"> 人员列表</strong>
+		</div>
+		<div class="padding border-bottom">
+			<button type="button" class="button border-yellow"
+				onclick="window.location.href='#add'">
+				<span class="icon-plus-square-o"></span> 添加人员
+			</button>
+		</div>
+		<table class="table table-hover text-center">
+			<thead>
+				<tr>
+					<th width="5%">编号</th>
+					<th width="15%">头像</th>
+					<th width="10%">姓名</th>
+					<th width="5%">年龄</th>
+					<th width="5%">性别</th>
+					<th width="10%">部门</th>
+					<th width="15%">联系电话</th>
+					<th width="15%">电子邮箱</th>
+					<th width="15%" colspan="2">操作</th>
+				</tr>
+			</thead>
+
+			<tbody class="tt">
+
+			</tbody>
+
+		</table>
+		<div class="btn" style="text-align: center;">
+			<button class="pre" onclick="prePage()">上一页</button>
+			<button class="next" onclick="nextPage()">下一页</button>
+		</div>
+		<script src="minejs/person.js"></script>
+	</div>
+	<script type="text/javascript">
+		function del(id, mid) {
+			if (confirm("您确定要删除吗?")) {
+	
+			}
+		}
+	</script>
+	<div class="panel admin-panel margin-top" id="add">
+		<div class="panel-head">
+			<strong><span class="icon-pencil-square-o"></span> 增加人员</strong>
+		</div>
+		<div class="body-content">
+			<form method="post" class="form-x"
+				action="PersonServlet.do?dowhat=addper"
+				enctype="multipart/form-data">
+				<div class="form-group">
+					<div class="label">
+						<label>头像：</label>
+					</div>
+					<div class="field">
+						<input type="file" id="url1" name="perimg" class="input tips"
+							style="width:25%; float:left;">
+						<div class="tipss">图片尺寸：1920*500</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>姓名：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="pername"
+							data-validate="required:请输入姓名" />
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>年龄：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="perage"
+							data-validate="required:请输入年龄">
+						<div class="tips"></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="label">
+						<label>性别：</label>
+					</div>
+					<div class="field">
+						<input type="radio" name="persex" value="男"><label>男</label>
+						<input type="radio" name="persex" value="女"><label>女</label>
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>部门：</label>
+					</div>
+					<div class="field">
+						<select name="depart" class="depart">
+							<option>--部门--</option>
+							<option value="财务部">财务部</option>
+							<option value="人事部">人事部</option>
+							<option value="研发部">研发部</option>
+							<option value="市场部">市场部</option>
+							<option value="运营部">运营部</option>
+							<option value="后勤部">后勤部</option>
+						</select>
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>电话：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="perphone" onblur="rephone(this)"
+							data-validate="required:请输入联系电话">
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>邮箱：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="peremail" onblur="reemail(this)"
+							data-validate="required:请输入邮箱">
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label></label>
+					</div>
+					<div class="field">
+						<button class="button bg-main icon-check-square-o" type="submit">
+							提交</button>
+						<button class="button bg-main icon-check-square-o" type="reset">
+							重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	
+	<div class="panel admin-panel margin-top" id="edit">
+		<div class="panel-head">
+			<strong><span class="icon-pencil-square-o"></span> 修改人员信息</strong>
+		</div>
+		<div class="body-content">
+			<form method="post" class="form-x" 
+				action="PersonServlet.do?dowhat=editper"
+				enctype="multipart/form-data">
+				<div class="form-group">
+					<div class="label">
+						<label>编号：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="perid1" readonly="readonly"
+						id="perid1" />
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>头像：</label>
+					</div>
+					<div class="field">
+						<input type="file" id="perimg1" name="perimg1" class="input tips" id="perid1"
+							style="width:25%; float:left;">
+						<div class="tipss">图片尺寸：1920*500</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>姓名：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="pername1"
+						id="pername1"	data-validate="required:请输入姓名" />
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>年龄：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="perage1"
+						id="perage1"	data-validate="required:请输入年龄">
+						<div class="tips"></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="label">
+						<label>性别：</label>
+					</div>
+					<div class="field">
+						<input type="radio" name="persex1" value="男"><label>男</label>
+						<input type="radio" name="persex1" value="女"><label>女</label>
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>部门：</label>
+					</div>
+					<div class="field">
+						<select name="depart1" id="depart1" class="depart">
+							<option>--部门--</option>
+							<option value="财务部">财务部</option>
+							<option value="人事部">人事部</option>
+							<option value="研发部">研发部</option>
+							<option value="市场部">市场部</option>
+							<option value="运营部">运营部</option>
+							<option value="后勤部">后勤部</option>
+						</select>
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>电话：</label>
+					</div>
+					<div class="field">
+						<input type="text" id="perphone1" class="input w50" name="perphone1" onblur="rephone(this)"
+						id="perphone1"	data-validate="required:请输入联系电话">
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>邮箱：</label>
+					</div>
+					<div class="field">
+						<input type="text" id="peremail1" class="input w50" name="peremail1" onblur="reemail(this)"
+						id="peremail1"	data-validate="required:请输入邮箱">
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label></label>
+					</div>
+					<div class="field">
+						<button class="button bg-main icon-check-square-o" type="submit">
+							提交</button>
+						<button class="button bg-main icon-check-square-o" type="reset">
+							重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

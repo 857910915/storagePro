@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<meta name="renderer" content="webkit">
+<title>出库信息</title>
+<link rel="stylesheet" href="css/pintuer.css">
+<link rel="stylesheet" href="css/admin.css">
+<script src="js/jquery.js"></script>
+<script src="js/pintuer.js"></script>
+<!-- 
+<style type="text/css">
+td {
+	height: 80px;
+}
+
+#add {
+	width: 50%;
+	border-right: 1px black solid;
+	float: left;
+}
+
+#edit {
+	width: 50%;
+	float: left;
+}
+</style>
+ -->
+</head>
+<body onload="getOutInfo()">
+	<div class="panel admin-panel">
+		<div class="panel-head">
+			<strong class="icon-reorder"> 出库记录</strong>
+		</div>
+		<div class="padding border-bottom">
+			<button type="button" class="button border-yellow"
+				onclick="window.location.href='#add'">
+				<span class="icon-plus-square-o"></span> 商品出库
+			</button>
+		</div>
+		<table class="table table-hover text-center">
+			<thead>
+				<tr>
+					<th width="10%">出库编号</th>
+					<th width="10%">管理员姓名</th>
+					<th width="10%">人员编号</th>
+					<th width="10%">商品编号</th>
+					<th width="10%">出库数量</th>
+					<th width="10%">出库时间</th>
+					<th width="15%" colspan="2">操作</th>
+				</tr>
+			</thead>
+
+			<tbody class="tt">
+
+			</tbody>
+
+		</table>
+		<div class="btn" style="text-align: center;">
+			<button class="pre" onclick="prePage()">上一页</button>
+			<button class="next" onclick="nextPage()">下一页</button>
+		</div>
+
+	</div>
+
+	<script type="text/javascript">
+		function del(id, mid) {
+			if (confirm("您确定要删除吗?")) {
+	
+			}
+		}
+	</script>
+
+
+	<div class="panel admin-panel margin-top" id="add">
+		<div class="panel-head">
+			<strong><span class="icon-pencil-square-o"></span> 添加出库记录</strong>
+		</div>
+		<div class="body-content">
+			<form action="OutServlet.do?dowhat=addout" method="post"
+				class="form-x">
+
+				<div class="form-group">
+					<div class="label">
+						<label>管理员姓名：</label>
+					</div>
+
+					<div class="field">
+						<!-- 
+						<input type="text" class="input w50" name="uid" id="uid"
+							onblur="getuserinfo(this)" data-validate="required:请输入管理员编号">
+					-->
+						<select name="username" class="input w50" id="username">
+							<option>管理员姓名</option>
+						</select>
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>人员姓名：</label>
+					</div>
+					<div class="field">
+						<!-- 
+						<input type="text" class="input w50" name="perid"
+							onblur="getperinfo(this)" id="perid" data-validate="required:请输入人员id" />
+						-->
+						<select name="pername" class="input w50" id="pername">
+							<option>人员姓名</option>
+						</select>
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>商品名称：</label>
+					</div>
+					<div class="field">
+						<!--
+						<input type="text" class="input w50" name="proid"
+							onblur="getproinfo(this)" id="proid" data-validate="required:请输入商品id" />
+						-->
+						<select name="proname" class="input w50" id="proname">
+							<option>商品名称</option>
+						</select>
+						<div class="tips"></div>
+					</div>
+
+				</div>
+
+				<div class="form-group">
+					<div class="label">
+						<label>出库数量：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="onumber" id="onumber"
+							onblur="getnuminfo(this)" data-validate="required:请输入出库商品数量">
+						<div class="tips"></div>
+					</div>
+				</div>
+				<!-- -->
+				<div class="form-group">
+					<div class="label">
+						<label>出库时间：</label>
+					</div>
+					<div class="field">
+						<input type="date" class="input w50" name="otime" id="otime"
+							data-validate="required:请输入商品出库时间">
+						<div class="tips"></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="label">
+						<label></label>
+					</div>
+					<div class="field">
+						<button class="button bg-main icon-check-square-o" type="submit">
+							提交</button>
+						<button class="button bg-main icon-check-square-o" type="reset">
+							重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- 
+	<div class="panel admin-panel margin-top" id="edit">
+		<div class="panel-head">
+			<strong><span class="icon-pencil-square-o"></span> 修改出库记录</strong>
+		</div>
+		<div class="body-content">
+			<form action="WarehousServlet.do?dowhat=editware" method="post"
+				class="form-x">
+				<div class="form-group">
+					<div class="label">
+						<label>出库编号：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="oid1" id="oid1"
+							readonly="readonly" data-validate="required:请输入出库编号">
+						<div class="tips"></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="label">
+						<label>管理员编号：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="uid1" id="uid1"
+							onblur="getuserinfo(this)" data-validate="required:请输入管理员编号">
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>人员编号：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="perid1"
+							onblur="getperinfo(this)" id="perid1"
+							data-validate="required:请输入商品id" />
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>商品编号：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="proid1"
+							onblur="getproinfo(this)" id="proid1"
+							data-validate="required:请输入商品id" />
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>出库数量：</label>
+					</div>
+					<div class="field">
+						<input type="text" class="input w50" name="onumber1" id="onumber1"
+							data-validate="required:请输入出库商品数量">
+						<div class="tips"></div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="label">
+						<label>出库时间：</label>
+					</div>
+					<div class="field">
+						<input type="date" class="input w50" name="otime1" id="otime1"
+							data-validate="required:请输入商品出库时间">
+						<div class="tips"></div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="label">
+						<label></label>
+					</div>
+					<div class="field">
+						<button class="button bg-main icon-check-square-o" type="submit">
+							提交</button>
+						<button class="button bg-main icon-check-square-o" type="reset">
+							重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+ -->
+</body>
+<script src="minejs/outstock.js"></script>
+</html>
